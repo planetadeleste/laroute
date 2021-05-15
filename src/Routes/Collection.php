@@ -94,7 +94,7 @@ class Collection extends \Illuminate\Support\Collection
         }
 
         $arProperties = config('laroute.properties', ['host', 'methods', 'uri', 'name', 'action']);
-        return call_user_func_array('compact', $arProperties);
+        return compact($arProperties);
     }
 
 }
