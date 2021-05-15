@@ -2,7 +2,6 @@
 
 namespace PlanetaDelEste\Laroute\Routes;
 
-use Illuminate\Config\Repository as Config;
 use Illuminate\Routing\Route;
 use Illuminate\Routing\RouteCollectionInterface;
 use Illuminate\Support\Arr;
@@ -10,17 +9,9 @@ use PlanetaDelEste\Laroute\Routes\Exceptions\ZeroRoutesException;
 
 class Collection extends \Illuminate\Support\Collection
 {
-    /**
-     * Config
-     *
-     * @var Config
-     */
-    protected $config;
-
     public function __construct($routes, $filter, $namespace)
     {
         $this->items = $this->parseRoutes($routes, $filter, $namespace);
-        $this->config = app('config');
     }
 
     /**
@@ -95,14 +86,14 @@ class Collection extends \Illuminate\Support\Collection
                 if($laroute !== true) return null;
                 break;
             case 'match':
-                $pattern = $this->config->get('laroute.pattern', '(api).*$');
+                $pattern = config('laroute.pattern', '(api).*$');
                 if (!preg_match('/'.$pattern.'/', $uri)) {
                     return null;
                 }
                 break;
         }
 
-        $arProperties = $this->config->get('laroute.properties', ['host', 'methods', 'uri', 'name', 'action']);
+        $arProperties = config('laroute.properties', ['host', 'methods', 'uri', 'name', 'action']);
         return call_user_func_array('compact', $arProperties);
     }
 
