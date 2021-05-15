@@ -16,7 +16,7 @@ Install the usual [composer](https://getcomposer.org/) way.
 ```json
 {
 	"require" : {
-		"lord/laroute" : "2.*"
+		"planetadeleste/laroute" : "2.*"
 	}
 }
 ```
@@ -29,7 +29,7 @@ n.b Laravel 4.x users, check out [version 1.3.2](https://github.com/aaronlord/la
 	
 	'providers' => array(
 		...
-		Lord\Laroute\LarouteServiceProvider::class,
+		PlanetaDelEste\Laroute\LarouteServiceProvider::class,
 	],
 	
 	...
@@ -40,10 +40,10 @@ n.b Laravel 4.x users, check out [version 1.3.2](https://github.com/aaronlord/la
 Copy the packages config files.
 
 ```
-php artisan vendor:publish --provider='Lord\Laroute\LarouteServiceProvider'
+php artisan vendor:publish --provider='PlanetaDelEste\Laroute\LarouteServiceProvider'
 ```
 
-###### app/config/packages/lord/laroute/config.php
+###### app/config/packages/planetadeleste/laroute/config.php
 
 ```php
 
@@ -78,8 +78,19 @@ return [
      * 'all' => All routes except "'laroute' => false"
      * 'only' => Only "'laroute' => true" routes
      * 'force' => All routes, ignored "laroute" route parameter
+     * 'match' => Match routes by uri "pattern"
      */
     'filter' => 'all',
+    
+    /**
+     * Filter regexp pattern
+     */
+    'pattern' => '(api).*$',
+
+    /**
+     * URL properties to be rendered on laroute.js
+     */
+    'properties' => ['host', 'methods', 'uri', 'name', 'action'],
 
     /*
      * Action Namespace
@@ -245,4 +256,4 @@ Route::group(['laroute' => false], function () {
 
 ## Licence
 
-[View the licence in this repo.](https://github.com/aaronlord/laroute/blob/master/LICENSE)
+[View the licence in this repo.](https://github.com/planetadeleste/laroute/blob/master/LICENSE)

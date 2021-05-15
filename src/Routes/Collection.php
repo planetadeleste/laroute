@@ -1,17 +1,26 @@
 <?php
 
-namespace Lord\Laroute\Routes;
+namespace PlanetaDelEste\Laroute\Routes;
 
+use Illuminate\Config\Repository as Config;
 use Illuminate\Routing\Route;
 use Illuminate\Routing\RouteCollectionInterface;
 use Illuminate\Support\Arr;
-use Lord\Laroute\Routes\Exceptions\ZeroRoutesException;
+use PlanetaDelEste\Laroute\Routes\Exceptions\ZeroRoutesException;
 
 class Collection extends \Illuminate\Support\Collection
 {
-    public function __construct(RouteCollectionInterface $routes, $filter, $namespace)
+    /**
+     * Config
+     *
+     * @var Config
+     */
+    protected $config;
+
+    public function __construct($routes, $filter, $namespace)
     {
         $this->items = $this->parseRoutes($routes, $filter, $namespace);
+        $this->config = app('config');
     }
 
     /**
@@ -24,7 +33,7 @@ class Collection extends \Illuminate\Support\Collection
      * @return array
      * @throws ZeroRoutesException
      */
-    protected function parseRoutes(RouteCollectionInterface $routes, $filter, $namespace)
+    protected function parseRoutes($routes, $filter, $namespace)
     {
         $this->guardAgainstZeroRoutes($routes);
 
@@ -34,7 +43,8 @@ class Collection extends \Illuminate\Support\Collection
             $results[] = $this->getRouteInformation($route, $filter, $namespace);
         }
 
-        return array_values(array_filter($results));
+        $results = array_values(array_filter($results));
+        return collect($results)->sortBy('uri')->values()->all();
     }
 
     /**
@@ -44,7 +54,7 @@ class Collection extends \Illuminate\Support\Collection
      *
      * @throws ZeroRoutesException
      */
-    protected function guardAgainstZeroRoutes(RouteCollectionInterface $routes)
+    protected function guardAgainstZeroRoutes($routes)
     {
         if (count($routes) < 1) {
             throw new ZeroRoutesException("You don't have any routes!");
@@ -60,7 +70,7 @@ class Collection extends \Illuminate\Support\Collection
      *
      * @return array
      */
-    protected function getRouteInformation(Route $route, $filter, $namespace)
+    protected function getRouteInformation(Route $route, $filter, $namespace): ?array
     {
         $host    = $route->domain();
         $methods = $route->methods();
@@ -84,9 +94,16 @@ class Collection extends \Illuminate\Support\Collection
             case 'only':
                 if($laroute !== true) return null;
                 break;
+            case 'match':
+                $pattern = $this->config->get('laroute.pattern', '(api).*$');
+                if (!preg_match('/'.$pattern.'/', $uri)) {
+                    return null;
+                }
+                break;
         }
 
-        return compact('host', 'methods', 'uri', 'name', 'action');
+        $arProperties = $this->config->get('laroute.properties', ['host', 'methods', 'uri', 'name', 'action']);
+        return call_user_func_array('compact', $arProperties);
     }
 
 }

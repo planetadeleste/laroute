@@ -1,6 +1,6 @@
 <?php
 
-namespace Lord\Laroute\Compilers;
+namespace PlanetaDelEste\Laroute\Compilers;
 
 class TemplateCompiler implements CompilerInterface
 {

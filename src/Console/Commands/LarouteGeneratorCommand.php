@@ -1,9 +1,9 @@
 <?php
 
-namespace Lord\Laroute\Console\Commands;
+namespace PlanetaDelEste\Laroute\Console\Commands;
 
-use Lord\Laroute\Routes\Collection as Routes;
-use Lord\Laroute\Generators\GeneratorInterface as Generator;
+use PlanetaDelEste\Laroute\Routes\Collection as Routes;
+use PlanetaDelEste\Laroute\Generators\GeneratorInterface as Generator;
 
 use Illuminate\Config\Repository as Config;
 use Illuminate\Console\Command;
@@ -36,14 +36,14 @@ class LarouteGeneratorCommand extends Command
     /**
      * An array of all the registered routes.
      *
-     * @var \Lord\Laroute\Routes\Collection
+     * @var \PlanetaDelEste\Laroute\Routes\Collection
      */
     protected $routes;
 
     /**
      * The generator instance.
      *
-     * @var \Lord\Laroute\Generators\GeneratorInterface
+     * @var \PlanetaDelEste\Laroute\Generators\GeneratorInterface
      */
     protected $generator;
 
@@ -54,7 +54,7 @@ class LarouteGeneratorCommand extends Command
      * @param Routes $routes
      * @param Generator $generator
      */
-    public function __construct(Config $config, Routes $routes, Generator $generator)
+    public function __construct($config, $routes, $generator)
     {
         $this->config    = $config;
         $this->routes    = $routes;

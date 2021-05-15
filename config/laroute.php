@@ -31,8 +31,19 @@ return [
      * 'all' => All routes except "'laroute' => false"
      * 'only' => Only "'laroute' => true" routes
      * 'force' => All routes, ignored "laroute" route parameter
+     * 'match' => Match routes by uri "pattern"
      */
     'filter' => 'all',
+
+    /**
+     * Filter regexp pattern
+     */
+    'pattern' => '(api).*$',
+
+    /**
+     * URL properties to be rendered on laroute.js
+     */
+    'properties' => ['host', 'methods', 'uri', 'name', 'action'],
 
     /*
      * Controller Namespace
@@ -47,7 +58,7 @@ return [
      * the ported helper Laravel url/route functions and the route data to go
      * with them.
      */
-    'template' => 'vendor/lord/laroute/src/templates/laroute.js',
+    'template' => 'vendor/planetadeleste/laroute/src/templates/laroute.js',
     
     /*
      * Appends a prefix to URLs. By default the prefix is an empty string.
