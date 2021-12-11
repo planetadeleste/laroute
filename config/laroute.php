@@ -5,25 +5,25 @@ return [
     /*
      * The destination path for the javascript file.
      */
-    'path' => 'public/js',
+    'path'             => 'public/js',
 
     /*
      * The destination filename for the javascript file.
      */
-    'filename' => 'laroute',
+    'filename'         => 'laroute',
 
     /*
      * The namespace for the helper functions. By default this will bind them to
      * `window.laroute`.
      */
-    'namespace' => 'laroute',
+    'namespace'        => 'laroute',
 
     /*
      * Generate absolute URLs
      *
      * Set the Application URL in config/app.php
      */
-    'absolute' => false,
+    'absolute'         => false,
 
     /*
      * The Filter Method
@@ -33,17 +33,17 @@ return [
      * 'force' => All routes, ignored "laroute" route parameter
      * 'match' => Match routes by uri "pattern"
      */
-    'filter' => 'all',
+    'filter'           => 'all',
 
     /**
      * Filter regexp pattern
      */
-    'pattern' => '(api).*$',
+    'pattern'          => '(api).*$',
 
     /**
      * URL properties to be rendered on laroute.js
      */
-    'properties' => ['host', 'methods', 'uri', 'name', 'action'],
+    'properties'       => ['host', 'methods', 'uri', 'name', 'action'],
 
     /*
      * Controller Namespace
@@ -58,12 +58,17 @@ return [
      * the ported helper Laravel url/route functions and the route data to go
      * with them.
      */
-    'template' => 'vendor/planetadeleste/laroute/src/templates/laroute.js',
-    
+    'template'         => 'vendor/planetadeleste/laroute/src/templates/laroute.js',
+
     /*
      * Appends a prefix to URLs. By default the prefix is an empty string.
-    *
-    */
-    'prefix' => '',
+     *
+     */
+    'prefix'           => '',
+
+    /*
+     * Generate files in typescript or javascript (if false)
+     */
+    'typescript' => false
 
 ];

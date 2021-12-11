@@ -50,11 +50,11 @@ class LarouteGeneratorCommand extends Command
     /**
      * Create a new command instance.
      *
-     * @param Config $config
-     * @param Routes $routes
+     * @param Config    $config
+     * @param Routes    $routes
      * @param Generator $generator
      */
-    public function __construct($config, $routes, $generator)
+    public function __construct($config, Routes $routes, Generator $generator)
     {
         $this->config    = $config;
         $this->routes    = $routes;
@@ -88,7 +88,7 @@ class LarouteGeneratorCommand extends Command
      *
      * @return string
      */
-    protected function getTemplatePath()
+    protected function getTemplatePath(): string
     {
         return $this->config->get('laroute.template');
     }
@@ -98,7 +98,7 @@ class LarouteGeneratorCommand extends Command
      *
      * @return array
      */
-    protected function getTemplateData()
+    protected function getTemplateData(): array
     {
         $namespace  = $this->getOptionOrConfig('namespace');
         $routes     = $this->routes->toJSON();
@@ -115,12 +115,13 @@ class LarouteGeneratorCommand extends Command
      *
      * @return string
      */
-    protected function getFileGenerationPath()
+    protected function getFileGenerationPath(): string
     {
         $path     = $this->getOptionOrConfig('path');
         $filename = $this->getOptionOrConfig('filename');
+        $ext      = $this->config->get('laroute.typescript') ? 'ts' : 'js';
 
-        return "{$path}/{$filename}.js";
+        return "{$path}/{$filename}.{$ext}";
     }
 
     /**
@@ -144,7 +145,7 @@ class LarouteGeneratorCommand extends Command
      *
      * @return array
      */
-    protected function getOptions()
+    protected function getOptions(): array
     {
         return [
             [
